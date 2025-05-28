@@ -47,7 +47,7 @@ my_ddl_schema = '''
 
 ```
 
-   # Crate data frame usinf StructType
+   # Crate data frame using StructType
 ```
    %python
    from pyspark.sql.types import * 
@@ -73,3 +73,69 @@ df = spark.read.format('csv')\
 .load('/FileStore/tables/BigMart_Sales.csv')
 
 ```
+
+# Write data frame to csv file
+```
+
+df.write.format('csv')\
+        .save('/FileStore/tables/CSV/data.csv')
+
+```
+# Write data frame to csv file in append mode
+```
+
+df.write.format('csv')\
+        .mode('append')\
+        .save('/FileStore/tables/CSV/data.csv')
+
+```
+# Write data frame to csv file in overwrite mode
+```
+
+df.write.format('csv')\
+        .mode('append')\
+        .save('/FileStore/tables/CSV/data.csv')
+
+```
+# Write data frame to csv in error mode
+```
+
+df.write.format('csv')\
+.mode('error')\
+.option('path','/FileStore/tables/CSV/data.csv')\
+.save()
+
+```
+# Write data frame to csv in ignore mode
+```
+
+df.write.format('csv')\
+.mode('ignore')\
+.option('path','/FileStore/tables/CSV/data.csv')\
+.save()
+
+```
+# Write data frame to parquet 
+```
+
+df.write.format('parquet')\
+.mode('overwrite')\
+.option('path','/FileStore/tables/CSV/data.csv')\
+.save()
+
+```
+# Write data frame to table
+```
+
+df.write.format('parquet')\
+.mode('overwrite')\
+.saveAsTable('my_table')
+
+```
+# Write data frame to a temp view 
+```
+
+df.createTempView('my_view')
+
+```
+
