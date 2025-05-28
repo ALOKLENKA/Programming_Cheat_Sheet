@@ -67,9 +67,9 @@ StructField('Outlet_Type',StringType(),True),
 StructField('Item_Outlet_Sales',StringType(),True)
 ])
 
-df = spark.read.format('csv')
-.schema(my_strct_schema)
-.option('header',True)
+df = spark.read.format('csv')\
+.schema(my_strct_schema)\
+.option('header',True)\
 .load('/FileStore/tables/BigMart_Sales.csv')
 
 ```
