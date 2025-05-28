@@ -9,7 +9,7 @@ spark = SparkSession.builder\
     .getOrCreate()
 
 ```
-- Note: 
+### Note: 
 - This is required from a normal python code, or thirdparthy engine like glue or emr
 - But not required from data braicks notebook                    
                     
