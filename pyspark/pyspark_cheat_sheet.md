@@ -10,7 +10,7 @@ spark = SparkSession.builder\
 
 ```
 ### Note: 
-- This is required from a normal python code, or thirdparthy engine like glue or emr
+- Required when Running PySpark scripts outside Databricks (e.g., local dev, EMR, etc.)
 - But not required from data braicks notebook                    
                     
           
