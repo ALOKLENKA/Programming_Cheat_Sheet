@@ -48,7 +48,7 @@ my_ddl_schema = '''
 ```
 
    # Crate data frame usinf StructType
-
+```
    %python
    from pyspark.sql.types import * 
    from pyspark.sql.functions import *  
