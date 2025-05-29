@@ -1,3 +1,27 @@
+# Create Spark Context
+```
+
+from pyspark import SparkConf, SparkContext
+
+# Create SparkConf object
+conf = SparkConf().setAppName("MyApp").setMaster("local[*]")
+
+# Create SparkContext
+sc = SparkContext(conf=conf)
+
+# Example: Create an RDD
+rdd = sc.parallelize([1, 2, 3, 4, 5])
+print("RDD Sum:", rdd.sum())
+
+# Stop the context
+sc.stop()
+
+```
+- API- Low-level (RDD) API
+- Usage - RDD operations
+- Introduced in Spark1.0
+- Access via sc = Spark.SparkContext
+
 # Create Spark Session
 ```
 
@@ -9,6 +33,10 @@ spark = SparkSession.builder\
     .getOrCreate()
 
 ```
+- API - High Level (Data Frame, Sql) API
+- Usage - DataFrame, SQL, Hive, Streaming, ML
+- Introduced in Saprk2.0
+- Access directly
 ### Note: 
 - Required when Running PySpark scripts outside Databricks (e.g., local dev, EMR, etc.)
 - But not required from data braicks notebook                    
