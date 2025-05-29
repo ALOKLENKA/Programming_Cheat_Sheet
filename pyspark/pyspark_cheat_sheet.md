@@ -41,6 +41,14 @@ spark = SparkSession.builder\
 - Required when Running PySpark scripts outside Databricks (e.g., local dev, EMR, etc.)
 - But not required from data braicks notebook                    
 
+# Create spark session in AWS glue
+```
+sc = SparkContext()
+glueContext = GlueContext(sc)
+spark = glueContext.spark_session
+
+```
+
 # Create data frame in Pyspark from a list of tuples
  ```
 
