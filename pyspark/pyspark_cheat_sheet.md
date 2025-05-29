@@ -40,8 +40,19 @@ spark = SparkSession.builder\
 ### Note: 
 - Required when Running PySpark scripts outside Databricks (e.g., local dev, EMR, etc.)
 - But not required from data braicks notebook                    
-                    
-# Create data frame in pyspark
+
+# Create data frame in Pyspark from a list of tuples
+ ```
+
+data1 = [('1','kad'),
+        ('2','sid')]
+schema1 = 'id STRING, name STRING' 
+
+df1 = spark.createDataFrame(data1,schema1)
+
+ ```
+
+# Create data frame in pyspark by reading a csv file
 ```
 %python
 df_sales=spark.read.format('csv')\
