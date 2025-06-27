@@ -1,1 +1,1 @@
-<image src="file:///C:/ALOK%20PERSONAL/University/Python/Cheat%20Sheet/beginners_python_cheat_sheet_pcc.pdf"
+<image src="file:///C:/ALOK%20PERSONAL/University/Python/Cheat%20Sheet/beginners_python_cheat_sheet_pcc.pdf"/>
