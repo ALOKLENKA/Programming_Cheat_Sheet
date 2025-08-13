@@ -185,4 +185,62 @@ df.write.format('parquet')\
 df.createTempView('my_view')
 
 ```
+# Spark Streaming
+## 	📘 Sample PySpark Code using CloudFiles
+	
+```python
+	from pyspark.sql.types import StructType, StringType, IntegerType
+	# Define schema
+schema = StructType() \
+    .add("id", IntegerType()) \
+    .add("name", StringType()) \
+    .add("city", StringType())
+	# Read streaming data from cloud files (e.g., S3 or ADLS)
+df = (spark.readStream
+    .format("cloudFiles")
+    .option("cloudFiles.format", "csv")         # or 'json', 'parquet', etc.
+    .option("cloudFiles.inferColumnTypes", "true")  # or provide schema
+    .schema(schema)
+    .load("/mnt/raw-data/")                     # path to your cloud mount
+)
+# Write to Delta table (Bronze layer)
+(df.writeStream
+    .format("delta")
+    .option("checkpointLocation", "/mnt/checkpoints/raw-data/")
+    .outputMode("append")
+    .start("/mnt/bronze-data/")
+
+```
+
+## 📜 PySpark Code (Kafka → Delta)
+
+```python
+from pyspark.sql.functions import col, from_json
+from pyspark.sql.types import StructType, StringType, IntegerType
+### 1. Define the schema for your Kafka value (JSON payload)
+schema = StructType() \
+    .add("id", IntegerType()) \
+    .add("name", StringType()) \
+    .add("city", StringType())
+# 2. Read streaming data from Kafka topic
+kafka_df = (spark.readStream
+    .format("kafka")
+    .option("kafka.bootstrap.servers", "localhost:9092")  # change to your broker
+    .option("subscribe", "input-topic")
+    .option("startingOffsets", "latest")  # or 'earliest' for dev/testing
+    .load())
+# 3. Parse the Kafka 'value' (binary) to string and extract JSON fields
+parsed_df = kafka_df.selectExpr("CAST(value AS STRING) as json_string")
+json_df = parsed_df.select(from_json(col("json_string"), schema).alias("data")).select("data.*")
+# 4. Optional: Filter or transform
+clean_df = json_df.filter("id is not null and name is not null")
+# 5. Write to Delta Table
+query = (clean_df.writeStream
+    .format("delta")
+    .outputMode("append")  # use "append" for streaming inserts
+    .option("checkpointLocation", "/mnt/checkpoints/kafka_to_delta/")  # use DBFS, S3, ADLS, etc.
+    .start("/mnt/bronze/kafka-data/"))
+
+```
+
 
